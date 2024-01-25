@@ -7,7 +7,7 @@ export type TUseParallelFetchProps<TRequestBody, TResponseData> = {
       "isActive" | "dependencies"
     >
   >;
-  isActive?: boolean;
+  isActive?: unknown;
   dependencies?: React.DependencyList;
 };
 

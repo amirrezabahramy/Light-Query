@@ -6,7 +6,7 @@ import {
 } from "../globalTypes";
 
 export type TUseFetchProps<TRequestBody, TResponseData> = {
-  isActive?: boolean;
+  isActive?: unknown;
 } & TBaseQueryProps<TRequestBody> & {
     base?: Partial<TLightQueryBase>;
     fetch?: Partial<TLightQueryFetch<TResponseData>>;
