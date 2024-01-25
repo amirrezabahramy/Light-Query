@@ -1,6 +1,6 @@
-import { TLightQuery } from "../globalTypes";
+import { TLightQueryConfig } from "../globalTypes";
 
 export type TLightQueryProviderProps = {
-  context: TLightQuery;
+  config: TLightQueryConfig;
   children?: React.ReactNode;
 };

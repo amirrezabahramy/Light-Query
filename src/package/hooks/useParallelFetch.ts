@@ -4,7 +4,7 @@ import {
   TUseParallelFetchResultObject,
   TUseParallelFetchProps,
 } from "@src/types/hooks/useParallelFetchTypes";
-import { TLightQuery } from "@src/types/globalTypes";
+import { TLightQueryConfig } from "@src/types/globalTypes";
 import { useLightQuery } from "@src/package/providers/LightQueryProvider";
 import { queryFn } from "../utils/controllers";
 
@@ -16,7 +16,7 @@ function useParallelFetch<
   props: TUseParallelFetchProps<TRequestBody, TResponseData>
 ): TUseParallelFetchReturnObject<TResponseData, TSelectedData> {
   // Overriding default config
-  const lightQuery: TLightQuery = useLightQuery();
+  const lightQuery: TLightQueryConfig = useLightQuery();
   const overriddenBaseOptions = props.queries.map((query) => ({
     ...lightQuery.base,
     ...query.base,

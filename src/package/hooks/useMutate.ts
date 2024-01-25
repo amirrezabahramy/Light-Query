@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { TError, TLightQuery, TStatus } from "../../types/globalTypes";
+import { TError, TLightQueryConfig, TStatus } from "../../types/globalTypes";
 import {
   TMutate,
   TMutateAsync,
@@ -13,7 +13,7 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   props: TUseMutateProps<TRequestBody, TResponseData>
 ): TUseMutateReturnObject<TRequestBody, TResponseData> {
   // Overriding default config
-  const lightQuery: TLightQuery = useLightQuery();
+  const lightQuery: TLightQueryConfig = useLightQuery();
   const overriddenBaseOptions = { ...lightQuery.base, ...props.base };
   const overriddenMutateOptions = { ...lightQuery.mutate, ...props.mutate };
 

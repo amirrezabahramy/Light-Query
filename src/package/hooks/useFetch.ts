@@ -3,7 +3,7 @@ import {
   TUseFetchProps,
   TUseFetchReturnObject,
 } from "@src/types/hooks/useFetchTypes";
-import { TError, TLightQuery, TStatus } from "@src/types/globalTypes";
+import { TError, TLightQueryConfig, TStatus } from "@src/types/globalTypes";
 import { useLightQuery } from "@src/package/providers/LightQueryProvider";
 import { queryFn } from "@src/package/utils/controllers";
 
@@ -15,7 +15,7 @@ function useFetch<
   props: TUseFetchProps<TRequestBody, TResponseData>
 ): TUseFetchReturnObject<TResponseData, TSelectedData> {
   // Overriding default config
-  const lightQuery: TLightQuery = useLightQuery();
+  const lightQuery: TLightQueryConfig = useLightQuery();
   const overriddenBaseOptions = { ...lightQuery.base, ...props.base };
   const overriddenFetchOptions = { ...lightQuery.fetch, ...props.fetch };
 

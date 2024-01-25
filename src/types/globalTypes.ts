@@ -33,7 +33,7 @@ export type TLightQueryMutate<TResponseData = unknown> = {
   };
 };
 
-export type TLightQuery<
+export type TLightQueryConfig<
   TFetchResponseData = unknown,
   TFetchSelectedData = unknown,
   TMutateResponseData = unknown
