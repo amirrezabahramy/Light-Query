@@ -52,7 +52,7 @@ function useFetch<
         setStatus("error");
       }
     };
-    !!props.isActive && fetchData();
+    (props.isActive === undefined || props.isActive === true) && fetchData();
 
     return () => {
       controller.abort();
