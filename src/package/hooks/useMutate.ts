@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import { TError, TLightQuery, TStatus } from "../../types/globalTypes";
 import {
   TMutate,
+  TMutateAsync,
   TUseMutateProps,
   TUseMutateReturnObject,
 } from "../../types/hooks/useMutateTypes";
@@ -28,7 +29,8 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
         setStatus("loading");
         const data = (await queryFn(props.url, overriddenBaseOptions, {
           ...props.fetchAPIOptions,
-          body: body || props.fetchAPIOptions?.body || null,
+          body,
+          method: props.fetchAPIOptions?.method || "POST",
         })) as TResponseData;
 
         setData(data);
@@ -46,16 +48,40 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
           overriddenMutateOptions.events.error(error as TError);
       } finally {
         // Finish event
-        overriddenMutateOptions.events?.settle &&
-          overriddenMutateOptions.events.settle();
+        overriddenMutateOptions.events?.settled &&
+          overriddenMutateOptions.events.settled();
       }
     },
+    [props.fetchAPIOptions?.body]
+  );
+
+  const mutateAsync: TMutateAsync<TRequestBody, TResponseData> = useCallback(
+    (body) =>
+      new Promise(async (resolve, reject) => {
+        try {
+          setStatus("loading");
+          const data = (await queryFn(props.url, overriddenBaseOptions, {
+            ...props.fetchAPIOptions,
+            body,
+            method: props.fetchAPIOptions?.method || "POST",
+          })) as TResponseData;
+
+          setData(data);
+          setStatus("success");
+          resolve(data);
+        } catch (error) {
+          setError(error as TError);
+          setStatus("error");
+          reject(error);
+        }
+      }),
     [props.fetchAPIOptions?.body]
   );
 
   // Result
   return {
     mutate,
+    mutateAsync,
     status,
     isLoading: status === "loading",
     isSuccess: status === "success",
