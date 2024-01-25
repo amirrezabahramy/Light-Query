@@ -9,7 +9,7 @@ import { useLightQuery } from "../providers/LightQueryProvider";
 import { joinUrls } from "@src/package/utils/helpers";
 import { queryFn } from "@src/package/utils/controllers";
 
-function useMutate<TRequestBody, TResponseData>(
+function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   props: TUseMutateProps<TRequestBody, TResponseData>
 ): TUseMutateReturnObject<TRequestBody, TResponseData> {
   // Overriding default config

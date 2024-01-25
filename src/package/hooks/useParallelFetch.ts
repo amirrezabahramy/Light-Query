@@ -8,7 +8,11 @@ import { TLightQuery } from "@src/types/globalTypes";
 import { useLightQuery } from "@src/package/providers/LightQueryProvider";
 import { queryFn } from "../utils/controllers";
 
-function useParallelFetch<TResponseData, TSelectedData, TRequestBody>(
+function useParallelFetch<
+  TResponseData = unknown,
+  TSelectedData = TResponseData,
+  TRequestBody = unknown
+>(
   props: TUseParallelFetchProps<TRequestBody, TResponseData>
 ): TUseParallelFetchReturnObject<TResponseData, TSelectedData> {
   // Overriding default config
