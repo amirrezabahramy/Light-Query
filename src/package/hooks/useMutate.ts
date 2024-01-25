@@ -28,8 +28,7 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
         setStatus("loading");
         const data = (await queryFn(props.url, overriddenBaseOptions, {
           ...props.fetchAPIOptions,
-          body:
-            JSON.stringify(body) || JSON.stringify(props.fetchAPIOptions?.body),
+          body: body || props.fetchAPIOptions?.body || null,
         })) as TResponseData;
 
         setData(data);

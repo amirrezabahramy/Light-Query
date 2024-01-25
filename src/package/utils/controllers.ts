@@ -4,7 +4,10 @@ import { joinUrls } from "./helpers";
 
 export const queryFn: TQueryFn = async (url, baseOptions, fetchAPIOptions) =>
   new Promise((resolve, reject) =>
-    fetch(joinUrls(baseOptions.baseUrl, url), fetchAPIOptions as RequestInit)
+    fetch(joinUrls(baseOptions.baseUrl, url), {
+      ...fetchAPIOptions,
+      body: JSON.stringify(fetchAPIOptions?.body),
+    } as RequestInit)
       .then((response) => {
         if (!response.ok)
           reject(
