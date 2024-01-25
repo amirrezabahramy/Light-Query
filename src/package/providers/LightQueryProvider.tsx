@@ -15,7 +15,7 @@ const LightQueryContext = createContext<TLightQuery>({
     events: {
       success: () => {},
       error: () => {},
-      settle: () => {},
+      settled: () => {},
     },
   },
 });

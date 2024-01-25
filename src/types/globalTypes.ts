@@ -29,7 +29,7 @@ export type TLightQueryMutate<TResponseData = unknown> = {
   events?: {
     success?: (data: TResponseData) => void;
     error?: (error: TError) => void;
-    settle?: () => void;
+    settled?: () => void;
   };
 };
 
