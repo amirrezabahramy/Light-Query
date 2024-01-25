@@ -17,9 +17,6 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   const overriddenBaseOptions = { ...lightQuery.base, ...props.base };
   const overriddenMutateOptions = { ...lightQuery.mutate, ...props.mutate };
 
-  // Controller
-  const controller = new AbortController();
-
   // States
   const [status, setStatus] = useState<TStatus>("idle");
   const [data, setData] = useState<TResponseData | null>(null);
@@ -33,7 +30,6 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
         joinUrls(overriddenBaseOptions.baseUrl, props.url),
         overriddenBaseOptions,
         {
-          signal: controller.signal,
           ...props.fetchAPIOptions,
           body:
             JSON.stringify(body) || JSON.stringify(props.fetchAPIOptions?.body),
@@ -58,12 +54,6 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
       overriddenMutateOptions.events?.settle &&
         overriddenMutateOptions.events.settle();
     }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      controller.abort();
-    };
   }, []);
 
   // Result
