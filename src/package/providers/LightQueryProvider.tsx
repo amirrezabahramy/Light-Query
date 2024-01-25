@@ -6,7 +6,17 @@ const LightQueryContext = createContext<TLightQueryConfig>(
   {} as TLightQueryConfig
 );
 
-export function createLightQueryConfig(config: TLightQueryConfig) {
+export function createLightQueryConfig<
+  TFetchResponseData = unknown,
+  TFetchSelectedData = unknown,
+  TMutateResponseData = unknown
+>(
+  config: TLightQueryConfig<
+    TFetchResponseData,
+    TFetchSelectedData,
+    TMutateResponseData
+  >
+) {
   return config;
 }
 
