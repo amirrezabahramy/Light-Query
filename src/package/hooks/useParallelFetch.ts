@@ -75,7 +75,7 @@ function useParallelFetch<
       );
       setLoading(false);
     };
-    (props.isActive === undefined || props.isActive === true) && fetchData();
+    !!props.isActive && fetchData();
 
     return () => {
       controller.abort();
