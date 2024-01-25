@@ -20,9 +20,9 @@ const LightQueryContext = createContext<TLightQuery>({
   },
 });
 
-function LightQueryProvider({ config, children }: TLightQueryProviderProps) {
+function LightQueryProvider({ context, children }: TLightQueryProviderProps) {
   return (
-    <LightQueryContext.Provider value={config}>
+    <LightQueryContext.Provider value={context}>
       {children}
     </LightQueryContext.Provider>
   );
