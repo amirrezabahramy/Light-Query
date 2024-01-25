@@ -23,38 +23,42 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   const [error, setError] = useState<TError | null>(null);
 
   // Mutate function
-  const mutate: TMutate<TRequestBody> = useCallback(async (body) => {
-    try {
-      setStatus("loading");
-      const data = (await queryFn(
-        joinUrls(overriddenBaseOptions.baseUrl, props.url),
-        overriddenBaseOptions,
-        {
-          ...props.fetchAPIOptions,
-          body:
-            JSON.stringify(body) || JSON.stringify(props.fetchAPIOptions?.body),
-        }
-      )) as TResponseData;
+  const mutate: TMutate<TRequestBody> = useCallback(
+    async (body) => {
+      try {
+        setStatus("loading");
+        const data = (await queryFn(
+          joinUrls(overriddenBaseOptions.baseUrl, props.url),
+          overriddenBaseOptions,
+          {
+            ...props.fetchAPIOptions,
+            body:
+              JSON.stringify(body) ||
+              JSON.stringify(props.fetchAPIOptions?.body),
+          }
+        )) as TResponseData;
 
-      setData(data);
-      setStatus("success");
+        setData(data);
+        setStatus("success");
 
-      // success event
-      overriddenMutateOptions.events?.success &&
-        overriddenMutateOptions.events.success(data);
-    } catch (error) {
-      setError(error as TError);
-      setStatus("error");
+        // success event
+        overriddenMutateOptions.events?.success &&
+          overriddenMutateOptions.events.success(data);
+      } catch (error) {
+        setError(error as TError);
+        setStatus("error");
 
-      // Error event
-      overriddenMutateOptions.events?.error &&
-        overriddenMutateOptions.events.error(error as TError);
-    } finally {
-      // Finish event
-      overriddenMutateOptions.events?.settle &&
-        overriddenMutateOptions.events.settle();
-    }
-  }, []);
+        // Error event
+        overriddenMutateOptions.events?.error &&
+          overriddenMutateOptions.events.error(error as TError);
+      } finally {
+        // Finish event
+        overriddenMutateOptions.events?.settle &&
+          overriddenMutateOptions.events.settle();
+      }
+    },
+    [props.fetchAPIOptions?.body]
+  );
 
   // Result
   return {
