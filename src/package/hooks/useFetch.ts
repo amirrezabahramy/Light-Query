@@ -19,17 +19,18 @@ function useFetch<
   const overriddenBaseOptions = { ...lightQuery.base, ...props.base };
   const overriddenFetchOptions = { ...lightQuery.fetch, ...props.fetch };
 
-  // Controller
-  const controller = new AbortController();
-
   // States
   const [status, setStatus] = useState<TStatus>("idle");
   const [responseData, setResponseData] = useState<TResponseData | null>(null);
   const [data, setData] = useState<TSelectedData | null>(null);
   const [error, setError] = useState<TError | null>(null);
 
-  // Fetching data
+  // Main effect
   useEffect(() => {
+    // Controller
+    const controller = new AbortController();
+
+    // Fetching data
     const fetchData = async () => {
       try {
         setStatus("loading");

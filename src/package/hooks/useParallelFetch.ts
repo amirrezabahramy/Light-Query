@@ -26,17 +26,18 @@ function useParallelFetch<
     ...query.fetch,
   }));
 
-  // Controller
-  const controller = new AbortController();
-
   // States
   const [isLoading, setLoading] = useState(false);
   const [results, setResults] = useState<
     Array<TUseParallelFetchResultObject<TResponseData, TSelectedData>>
   >([]);
 
-  // Fetching data
+  // Main effect
   useEffect(() => {
+    // Controller
+    const controller = new AbortController();
+
+    // Fetching data
     const fetchData = async () => {
       setLoading(true);
       const results = await Promise.allSettled(
