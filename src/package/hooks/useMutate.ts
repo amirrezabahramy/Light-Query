@@ -26,7 +26,7 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   const [error, setError] = useState<TError | null>(null);
 
   // Mutate function
-  const mutate: TMutate<TRequestBody> = useCallback(async (body) => {
+  const mutate: TMutate<TRequestBody> = useCallback(async (body?) => {
     try {
       setStatus("loading");
       const data = (await queryFn(
