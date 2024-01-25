@@ -11,7 +11,7 @@ export type TUseMutateProps<TRequestBody, TResponseData> =
     mutate?: Partial<TLightQueryMutate<TResponseData>>;
   };
 
-export type TMutate<TRequestBody> = (body: TRequestBody) => void;
+export type TMutate<TRequestBody> = (body?: TRequestBody) => void;
 
 export type TUseMutateReturnObject<TRequestBody, TResponseData> =
   TBaseQueryReturnObject<TResponseData> & {
