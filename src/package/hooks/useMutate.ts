@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { TError, TLightQuery, TStatus } from "../../types/globalTypes";
 import {
   TMutate,
@@ -6,7 +6,6 @@ import {
   TUseMutateReturnObject,
 } from "../../types/hooks/useMutateTypes";
 import { useLightQuery } from "../providers/LightQueryProvider";
-import { joinUrls } from "@src/package/utils/helpers";
 import { queryFn } from "@src/package/utils/controllers";
 
 function useMutate<TRequestBody = unknown, TResponseData = unknown>(
@@ -27,16 +26,11 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
     async (body) => {
       try {
         setStatus("loading");
-        const data = (await queryFn(
-          joinUrls(overriddenBaseOptions.baseUrl, props.url),
-          overriddenBaseOptions,
-          {
-            ...props.fetchAPIOptions,
-            body:
-              JSON.stringify(body) ||
-              JSON.stringify(props.fetchAPIOptions?.body),
-          }
-        )) as TResponseData;
+        const data = (await queryFn(props.url, overriddenBaseOptions, {
+          ...props.fetchAPIOptions,
+          body:
+            JSON.stringify(body) || JSON.stringify(props.fetchAPIOptions?.body),
+        })) as TResponseData;
 
         setData(data);
         setStatus("success");
