@@ -4,7 +4,7 @@ import { joinUrls } from "./helpers";
 
 export const queryFn: TQueryFn = async (url, baseOptions, fetchAPIOptions) =>
   new Promise((resolve, reject) =>
-    fetch(joinUrls(baseOptions.baseUrl, url), {
+    fetch(baseOptions?.baseUrl ? joinUrls(baseOptions.baseUrl, url) : url, {
       ...fetchAPIOptions,
       body: fetchAPIOptions?.body && JSON.stringify(fetchAPIOptions?.body),
     } as RequestInit)
@@ -12,16 +12,21 @@ export const queryFn: TQueryFn = async (url, baseOptions, fetchAPIOptions) =>
         if (!response.ok)
           reject(
             new Error(
-              baseOptions.primaryErrorMessage &&
+              baseOptions?.primaryErrorMessage &&
                 baseOptions.primaryErrorMessage(response)
             )
           );
         resolve(response.json());
       })
       .catch((error) => {
+        if (error instanceof DOMException) {
+          reject(
+            new Error(`Timeout of ${baseOptions?.timeout}ms has been exceeded.`)
+          );
+        }
         reject(
           new Error(
-            baseOptions.secondaryErrorMessage &&
+            baseOptions?.secondaryErrorMessage &&
               baseOptions.secondaryErrorMessage(error as TError)
           )
         );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   TUseParallelFetchReturnObject,
   TUseParallelFetchResultObject,
@@ -32,21 +32,25 @@ function useParallelFetch<
     Array<TUseParallelFetchResultObject<TResponseData, TSelectedData>>
   >([]);
 
+  // Controller
+  const controllerRef = useRef<AbortController>(new AbortController());
+
   // Main effect
   useEffect(() => {
-    // Controller
-    const controller = new AbortController();
-
     // Fetching data
     const fetchData = async () => {
       setLoading(true);
       const results = await Promise.allSettled(
-        props.queries.map((query, index) =>
-          queryFn(query.url, overriddenBaseOptions[index], {
-            signal: controller.signal,
+        props.queries.map((query, index) => {
+          overriddenBaseOptions[index].timeout &&
+            setTimeout(() => {
+              controllerRef.current.abort();
+            }, overriddenBaseOptions[index].timeout);
+          return queryFn(query.url, overriddenBaseOptions[index], {
+            signal: controllerRef.current.signal,
             ...query.fetchAPIOptions,
-          })
-        )
+          });
+        })
       );
       const mappedResults = results.map((result, index) => {
         const isSuccess = result.status === "fulfilled";
@@ -55,9 +59,11 @@ function useParallelFetch<
               isSuccess: true,
               isError: false,
               responseData: result.value,
-              data: overriddenFetchOptions[index].selectedData(
-                result.value as TResponseData
-              ),
+              data: overriddenFetchOptions[index].selectedData
+                ? overriddenFetchOptions[index].selectedData!(
+                    result.value as TResponseData
+                  )
+                : (result.value as TSelectedData),
               error: null,
             }
           : ({
@@ -75,11 +81,8 @@ function useParallelFetch<
       );
       setLoading(false);
     };
-    (props.isActive === undefined || props.isActive === true) && fetchData();
 
-    return () => {
-      controller.abort();
-    };
+    (props.isActive === undefined || props.isActive === true) && fetchData();
   }, [...(props.dependencies || []), props.isActive]);
 
   return { isLoading, results };

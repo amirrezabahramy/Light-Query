@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   TUseFetchProps,
   TUseFetchReturnObject,
@@ -25,24 +25,30 @@ function useFetch<
   const [data, setData] = useState<TSelectedData | null>(null);
   const [error, setError] = useState<TError | null>(null);
 
+  // Controller
+  const controllerRef = useRef<AbortController>(new AbortController());
+
   // Main effect
   useEffect(() => {
-    // Controller
-    const controller = new AbortController();
-
     // Fetching data
     const fetchData = async () => {
+      overriddenBaseOptions.timeout &&
+        setTimeout(() => {
+          controllerRef.current.abort();
+        }, overriddenBaseOptions.timeout);
       try {
         setStatus("loading");
         // Query
         const data = await queryFn(props.url, overriddenBaseOptions, {
-          signal: controller.signal,
+          signal: controllerRef.current.signal,
           ...props.fetchAPIOptions,
         }).then((responseData) => {
           setResponseData(responseData as TResponseData);
-          return overriddenFetchOptions.selectedData(
-            responseData as TResponseData
-          ) as TSelectedData;
+          return overriddenFetchOptions.selectedData
+            ? (overriddenFetchOptions.selectedData(
+                responseData as TResponseData
+              ) as TSelectedData)
+            : (responseData as TSelectedData);
         });
         // Query
         setData(data);
@@ -52,11 +58,8 @@ function useFetch<
         setStatus("error");
       }
     };
-    (props.isActive === undefined || props.isActive === true) && fetchData();
 
-    return () => {
-      controller.abort();
-    };
+    (props.isActive === undefined || props.isActive === true) && fetchData();
   }, [...(props.dependencies || []), props.isActive]);
 
   // Result

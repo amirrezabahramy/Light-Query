@@ -13,7 +13,8 @@ export type TFetchAPIOptions<RequestData> = Omit<
 
 // Light query config
 export type TLightQueryBase = {
-  baseUrl: string;
+  baseUrl?: string;
+  timeout?: number;
   primaryErrorMessage?: (response: Response) => string;
   secondaryErrorMessage?: (error: TError) => string;
 };
@@ -22,7 +23,7 @@ export type TLightQueryFetch<
   TResponseData = unknown,
   TSelectedData = TResponseData
 > = {
-  selectedData: (data: TResponseData) => TSelectedData;
+  selectedData?: (data: TResponseData) => TSelectedData;
 };
 
 export type TLightQueryMutate<TResponseData = unknown> = {
@@ -38,9 +39,9 @@ export type TLightQueryConfig<
   TFetchSelectedData = unknown,
   TMutateResponseData = unknown
 > = {
-  base: TLightQueryBase;
-  fetch: TLightQueryFetch<TFetchResponseData, TFetchSelectedData>;
-  mutate: TLightQueryMutate<TMutateResponseData>;
+  base?: TLightQueryBase;
+  fetch?: TLightQueryFetch<TFetchResponseData, TFetchSelectedData>;
+  mutate?: TLightQueryMutate<TMutateResponseData>;
 };
 
 export type TBaseQueryProps<TRequestBody> = {
