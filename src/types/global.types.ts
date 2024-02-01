@@ -47,7 +47,6 @@ export type TLightQueryConfig<
 export type TBaseQueryProps<TRequestBody> = {
   name: string;
   url: string;
-  dependencies?: React.DependencyList;
   fetchAPIOptions?: TFetchAPIOptions<TRequestBody>;
 };
 
