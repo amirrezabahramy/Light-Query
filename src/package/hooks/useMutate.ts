@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { TError, TLightQueryConfig, TStatus } from "../../types/global.types";
 import {
   TMutate,
@@ -22,12 +22,19 @@ function useMutate<TRequestBody = unknown, TResponseData = unknown>(
   const [data, setData] = useState<TResponseData | null>(null);
   const [error, setError] = useState<TError | null>(null);
 
+  const controllerRef = useRef<AbortController>(new AbortController());
+
   // Mutate function
   const mutate: TMutate<TRequestBody> = useCallback(
     async (body) => {
+      overriddenBaseOptions.timeout &&
+        setTimeout(() => {
+          controllerRef.current.abort();
+        }, overriddenBaseOptions.timeout);
       try {
         setStatus("loading");
         const data = (await queryFn(props.url, overriddenBaseOptions, {
+          signal: controllerRef.current.signal,
           ...props.fetchAPIOptions,
           body,
           method: props.fetchAPIOptions?.method || "POST",
