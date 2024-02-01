@@ -1,6 +1,6 @@
 {
-  "name": "@byx/light-query",
-  "version": "1.0.0",
+  "name": "@doctorby/light-query",
+  "version": "0.0.0",
   "description": "Light package for handling queries in react",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
