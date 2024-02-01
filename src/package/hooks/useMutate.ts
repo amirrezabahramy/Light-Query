@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
-import { TError, TLightQueryConfig, TStatus } from "../../types/globalTypes";
+import { TError, TLightQueryConfig, TStatus } from "../../types/global.types";
 import {
   TMutate,
   TMutateAsync,
   TUseMutateProps,
   TUseMutateReturnObject,
-} from "../../types/hooks/useMutateTypes";
+} from "../../types/hooks/useMutate.types";
 import { useLightQuery } from "../providers/LightQueryProvider";
 import { queryFn } from "@src/package/utils/controllers";
 

@@ -1,4 +1,4 @@
-import { TLightQueryConfig } from "../globalTypes";
+import { TLightQueryConfig } from "../global.types";
 
 export type TLightQueryProviderProps = {
   config: TLightQueryConfig;

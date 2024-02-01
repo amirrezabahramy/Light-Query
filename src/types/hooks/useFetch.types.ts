@@ -3,7 +3,7 @@ import {
   TBaseQueryReturnObject,
   TLightQueryBase,
   TLightQueryFetch,
-} from "../globalTypes";
+} from "../global.types";
 
 export type TUseFetchProps<TRequestBody, TResponseData> = {
   isActive?: boolean;

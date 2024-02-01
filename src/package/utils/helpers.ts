@@ -1,4 +1,4 @@
-import { TJoinUrls } from "@src/types/utils/helpersTypes";
+import { TJoinUrls } from "@src/types/utils/helpers.types";
 
 export const joinUrls: TJoinUrls = (...args) =>
   args

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import {
   TUseFetchProps,
   TUseFetchReturnObject,
-} from "@src/types/hooks/useFetchTypes";
-import { TError, TLightQueryConfig, TStatus } from "@src/types/globalTypes";
+} from "@src/types/hooks/useFetch.types";
+import { TError, TLightQueryConfig, TStatus } from "@src/types/global.types";
 import { useLightQuery } from "@src/package/providers/LightQueryProvider";
 import { queryFn } from "@src/package/utils/controllers";
 

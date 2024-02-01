@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import { TLightQueryConfig } from "@src/types/globalTypes";
-import { TLightQueryProviderProps } from "@src/types/providers/LightQueryProviderTypes";
+import { TLightQueryConfig } from "@src/types/global.types";
+import { TLightQueryProviderProps } from "@src/types/providers/LightQueryProvider.types";
 
 const LightQueryContext = createContext<TLightQueryConfig>(
   {} as TLightQueryConfig

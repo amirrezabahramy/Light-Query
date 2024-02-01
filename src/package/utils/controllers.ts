@@ -1,5 +1,5 @@
-import { TError } from "@src/types/globalTypes";
-import { TQueryFn } from "@src/types/utils/controllersTypes";
+import { TError } from "@src/types/global.types";
+import { TQueryFn } from "@src/types/utils/controllers.types";
 import { joinUrls } from "./helpers";
 
 export const queryFn: TQueryFn = async (url, baseOptions, fetchAPIOptions) =>

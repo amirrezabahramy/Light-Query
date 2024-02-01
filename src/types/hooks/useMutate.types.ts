@@ -3,7 +3,7 @@ import {
   TBaseQueryReturnObject,
   TLightQueryBase,
   TLightQueryMutate,
-} from "../globalTypes";
+} from "../global.types";
 
 export type TUseMutateProps<TRequestBody, TResponseData> =
   TBaseQueryProps<TRequestBody> & {

@@ -1,4 +1,4 @@
-import { TError, TFetchAPIOptions, TLightQueryBase } from "../globalTypes";
+import { TError, TFetchAPIOptions, TLightQueryBase } from "../global.types";
 
 export type TQueryFn<TRequestBody = unknown, TResponseData = unknown> = (
   url: string,

@@ -1,4 +1,4 @@
-import { TUseFetchProps, TUseFetchReturnObject } from "./useFetchTypes";
+import { TUseFetchProps, TUseFetchReturnObject } from "./useFetch.types";
 
 export type TUseParallelFetchProps<TRequestBody, TResponseData> = {
   queries: Array<

@@ -3,8 +3,8 @@ import {
   TUseParallelFetchReturnObject,
   TUseParallelFetchResultObject,
   TUseParallelFetchProps,
-} from "@src/types/hooks/useParallelFetchTypes";
-import { TLightQueryConfig } from "@src/types/globalTypes";
+} from "@src/types/hooks/useParallelFetch.types";
+import { TLightQueryConfig } from "@src/types/global.types";
 import { useLightQuery } from "@src/package/providers/LightQueryProvider";
 import { queryFn } from "../utils/controllers";
 
